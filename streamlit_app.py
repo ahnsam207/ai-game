@@ -44,7 +44,6 @@ with selected_tab[0]:
         st.write(f"총 점수: {st.session_state.score} / {len(st.session_state.used_questions)}")
         if st.button("다시 시작하기"):
             reset_game()
-            st.experimental_rerun()
     else:
         current = st.session_state.used_questions[st.session_state.question_index]
         correct_word = current["word"]
@@ -87,7 +86,7 @@ with selected_tab[1]:
     st.markdown("- 특징: 퍼포먼스, 자작곡, 긍정 메시지")
 
     st.image(
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/BTS_in_Singapore_20180901.jpg/1200px-BTS_in_Singapore_20180901.jpg",
+        "https://i.ytimg.com/vi/XsX3ATc3FbA/maxresdefault.jpg",
         caption="BTS의 대표 무대 사진",
         use_column_width=True,
     )
@@ -96,14 +95,14 @@ with selected_tab[1]:
     col1, col2 = st.columns(2)
     with col1:
         st.image(
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/BTS_at_The_2018_Melon_Music_Awards_%285%29.jpg/1280px-BTS_at_The_2018_Melon_Music_Awards_%285%29.jpg",
-            caption="무대 위 BTS",
+            "https://img.youtube.com/vi/XsX3ATc3FbA/0.jpg",
+            caption="뮤직비디오 장면",
             use_column_width=True,
         )
     with col2:
         st.image(
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/BTS_%28Bangtan_Boys%29_%EC%A0%84%EC%B2%B4_2019.png/1200px-BTS_%28Bangtan_Boys%29_%EC%A0%84%EC%B2%B4_2019.png",
-            caption="BTS 공식 그룹 사진",
+            "https://i.ytimg.com/vi/kTlv5_Bs8aw/maxresdefault.jpg",
+            caption="BTS 무대 이미지",
             use_column_width=True,
         )
 
