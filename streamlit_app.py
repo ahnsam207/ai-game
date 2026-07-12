@@ -49,10 +49,8 @@ with col2:
         if st.session_state.question_index < len(st.session_state.used_questions) - 1:
             st.session_state.question_index += 1
             st.session_state.answer_checked = False
-            st.experimental_rerun()
         else:
             st.session_state.question_index += 1
-            st.experimental_rerun()
 
 if st.session_state.answer_checked:
     if st.session_state.last_correct:
