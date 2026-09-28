@@ -62,6 +62,7 @@ body { margin: 0; color: #202720; background: transparent; }
 .stat strong { color: var(--accent); }
 .music-toggle { min-height: 38px; padding: 0 12px; border: 1px solid #b7c9bc; border-radius: 6px; background: #fff; color: #202720; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
 .music-toggle:hover { border-color: var(--accent); }
+.speed-controls { display: flex; flex-wrap: wrap; gap: 8px; }
 .meaning { min-height: 72px; display: flex; align-items: center; gap: 12px; margin-bottom: 10px; padding: 12px 16px; border-left: 4px solid var(--accent); border-radius: 6px; background: #fff; }
 .meaning-label { flex: 0 0 auto; color: #657268; font-size: 13px; }
 #meaning { font-size: 20px; font-weight: 700; overflow-wrap: anywhere; }
@@ -104,7 +105,11 @@ button.action:hover { background: #174533; }
 			<div class="stat">스테이지 <strong id="stage">1</strong></div>
 			<div class="stat">진행 <strong id="progress">0</strong></div>
 		</div>
-		<button class="music-toggle" id="musicToggle" type="button">♫ 배경음악 끄기</button>
+		<div class="speed-controls">
+			<button class="music-toggle" id="speedDown" type="button">SPEED DOWN</button>
+			<button class="music-toggle" id="speedUp" type="button">SPEED UP</button>
+			<button class="music-toggle" id="musicToggle" type="button">♫ 배경음악 끄기</button>
+		</div>
 	</div>
 	<div class="meaning"><span class="meaning-label">이 뜻에 맞는 영어 단어를 누르세요</span><span id="meaning">게임을 시작해 주세요</span></div>
 	<section class="arena" id="arena" aria-label="영단어 낙하 스테이지"><div class="floor"></div></section>
@@ -126,6 +131,8 @@ const stageEl = document.getElementById("stage");
 const progressEl = document.getElementById("progress");
 const messageEl = document.getElementById("message");
 const musicToggle = document.getElementById("musicToggle");
+const speedDownButton = document.getElementById("speedDown");
+const speedUpButton = document.getElementById("speedUp");
 let score = 0;
 let lives = 3;
 let round = 0;
@@ -141,6 +148,7 @@ let musicTimer = null;
 let musicStep = 0;
 let musicEnabled = true;
 let wordBag = [];
+let gameSpeed = 1;
 let wrongWordMap = new Map();
 let gameOverOverlay = null;
 let gameMode = "normal";
@@ -310,6 +318,9 @@ musicToggle.addEventListener("click", () => {
 	else stopMusic();
 });
 
+speedDownButton.addEventListener("click", () => { gameSpeed *= 0.9; });
+speedUpButton.addEventListener("click", () => { gameSpeed *= 1.1; });
+
 function updateStats() {
 	scoreEl.textContent = String(score);
 	livesEl.textContent = `${lives} / 3`;
@@ -443,7 +454,7 @@ function animate(time) {
 	previousTime = time;
 	const floor = arena.clientHeight - 48;
 	for (const item of falling) {
-		item.y += item.speed * elapsed;
+		item.y += item.speed * gameSpeed * elapsed;
 		item.element.style.top = `${item.y}px`;
 		if (item.choice === target && item.y >= floor) {
 			finishRound(false, true);
@@ -462,6 +473,7 @@ function startGame(words = wordBook, mode = "normal", count = 20) {
 	score = 0;
 	lives = 3;
 	round = 0;
+	gameSpeed = 1;
 	wordBag = [];
 	wrongWordMap = new Map();
 	active = true;
